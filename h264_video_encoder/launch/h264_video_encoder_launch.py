@@ -38,8 +38,8 @@ def generate_launch_description():
    ])
   encoder_node = launch_ros.actions.Node(
     package="h264_video_encoder",
-    node_executable="h264_video_encoder",
-    node_name=launch.substitutions.LaunchConfiguration(NODE_NAME),
+    executable="h264_video_encoder",
+    name=launch.substitutions.LaunchConfiguration(NODE_NAME),
     parameters=[launch.substitutions.LaunchConfiguration(CONFIG)]
   )
 
