@@ -281,7 +281,7 @@ TEST_F(H264EncoderNodeSuite, InitializeCommunicaiton)
   executor.add_node(pub_node);
   for (int i = 0; i < kNumTestFrames; ++i) {
     CreateImageMsg(default_msg, i);
-    image_pub->publish(default_msg);
+    image_pub->publish(*default_msg);
     executor.spin_some();
     EXPECT_GE(frame_index, prev_frame_index);
     prev_frame_index = frame_index;
