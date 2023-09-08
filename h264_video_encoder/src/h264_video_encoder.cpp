@@ -102,8 +102,9 @@ void ImageCallback(sensor_msgs::msg::Image::ConstSharedPtr msg, const H264Encode
   pub->publish(frame);
 
   constexpr int kDbgMsgThrottlePeriod = 10;  // 10 seconds throttling period
-  RCUTILS_LOG_DEBUG_THROTTLE("", kDbgMsgThrottlePeriod, "Published Frame #%lu (timestamp: %lu)\n", frame_num,
-                     encoder_output.frame_pts);
+  // FIXEME: error: expression cannot be used as a function
+  // RCUTILS_LOG_DEBUG_THROTTLE("", kDbgMsgThrottlePeriod, "Published Frame #%lu (timestamp: %lu)\n", frame_num,
+  //                    encoder_output.frame_pts);
 
   ++frame_num;
 }
