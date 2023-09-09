@@ -44,7 +44,7 @@ def generate_launch_description():
   declared_arguments.append(
       DeclareLaunchArgument(
           "node_name",
-          default_value="h264_video_encoder",
+          default_value="h264_color_video_encoder",
       )
   )
   declared_arguments.append(
