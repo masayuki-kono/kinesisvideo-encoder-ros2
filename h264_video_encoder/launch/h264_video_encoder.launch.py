@@ -1,5 +1,5 @@
 # Copyright 2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
-# 
+#
 # Licensed under the Apache License, Version 2.0 (the "License").
 # You may not use this file except in compliance with the License.
 # A copy of the License is located at
@@ -21,37 +21,39 @@ from launch_ros.actions import Node
 
 
 def launch_setup(context, *args, **kwargs):
-  node_name = LaunchConfiguration("node_name")
-  config_filename = LaunchConfiguration("config_filename")
+    node_name = LaunchConfiguration("node_name")
+    config_filename = LaunchConfiguration("config_filename")
 
-  config_filepath = PathJoinSubstitution(
-      [FindPackageShare("h264_video_encoder"), "config", config_filename]
-  )
+    config_filepath = PathJoinSubstitution(
+        [FindPackageShare("h264_video_encoder"), "config", config_filename]
+    )
 
-  encoder_node = Node(
-    package="h264_video_encoder",
-    executable="h264_video_encoder",
-    name=node_name,
-    parameters=[config_filepath]
-  )
+    encoder_node = Node(
+        package="h264_video_encoder",
+        executable="h264_video_encoder",
+        name=node_name,
+        parameters=[config_filepath],
+    )
 
-  output_log_actions = [LogInfo(msg=config_filepath)]
-  return output_log_actions + [encoder_node]
+    output_log_actions = [LogInfo(msg=config_filepath)]
+    return output_log_actions + [encoder_node]
 
 
 def generate_launch_description():
-  declared_arguments = []
-  declared_arguments.append(
-      DeclareLaunchArgument(
-          "node_name",
-          default_value="h264_color_video_encoder",
-      )
-  )
-  declared_arguments.append(
-      DeclareLaunchArgument(
-          "config_filename",
-          default_value="color.yaml",
-      )
-  )
+    declared_arguments = []
+    declared_arguments.append(
+        DeclareLaunchArgument(
+            "node_name",
+            default_value="h264_color_video_encoder",
+        )
+    )
+    declared_arguments.append(
+        DeclareLaunchArgument(
+            "config_filename",
+            default_value="color.yaml",
+        )
+    )
 
-  return LaunchDescription(declared_arguments + [OpaqueFunction(function=launch_setup)])
+    return LaunchDescription(
+        declared_arguments + [OpaqueFunction(function=launch_setup)]
+    )
