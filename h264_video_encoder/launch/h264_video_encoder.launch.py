@@ -22,20 +22,21 @@ from launch_ros.actions import Node
 
 def launch_setup(context, *args, **kwargs):
     node_name = LaunchConfiguration("node_name")
-    config_filename = LaunchConfiguration("config_filename")
+    config_file_path = LaunchConfiguration("config_file_path")
 
-    config_filepath = PathJoinSubstitution(
-        [FindPackageShare("h264_video_encoder"), "config", config_filename]
+    if context.perform_substitution(config_file_path) == "":
+         config_file_path = PathJoinSubstitution(
+             [FindPackageShare("h264_video_encoder"), "config", "sample.yaml"]
     )
 
     encoder_node = Node(
         package="h264_video_encoder",
         executable="h264_video_encoder",
         name=node_name,
-        parameters=[config_filepath],
+        parameters=[config_file_path],
     )
 
-    output_log_actions = [LogInfo(msg=config_filepath)]
+    output_log_actions = [LogInfo(msg=config_file_path)]
     return output_log_actions + [encoder_node]
 
 
@@ -49,8 +50,8 @@ def generate_launch_description():
     )
     declared_arguments.append(
         DeclareLaunchArgument(
-            "config_filename",
-            default_value="color.yaml",
+            "config_file_path",
+            default_value="",
         )
     )
 
